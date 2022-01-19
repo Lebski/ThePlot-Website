@@ -1,10 +1,12 @@
 {
     "description": "Friendly OpenSea Creature that enjoys long swims in the ocean.",
-        "external_url": "https://openseacreatures.io/3",
-            "image": "https://storage.googleapis.com/opensea-prod.appspot.com/puffs/3.png",
-                "name": "Dave Starbelly",
-                    "attributes": [{
-                        "trait_type": "Base",
-                        "value": "Starfish"
-                    },], 
-  }
+    "external_url": "https://the-knot-nft.herokuapp.com",
+    "image": "https://the-knot-nft.herokuapp.com/nft/img/test.jpg",
+    "name": "Dave Starbelly",
+    "attributes": [
+        {
+            "trait_type": "The Child",
+            "value": "Grogu"
+        }
+    ]
+}
