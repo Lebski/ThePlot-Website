@@ -9,8 +9,8 @@
             "value": "Grogu"
         },
         {
-            "trait_type": "Is Knotted",
-            "value": false
+            "trait_type": "Is Knotted?",
+            "value": "false"
         }
     ]
 }
