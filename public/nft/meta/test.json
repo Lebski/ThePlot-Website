@@ -2,11 +2,15 @@
     "description": "Friendly OpenSea Creature that enjoys long swims in the ocean.",
     "external_url": "https://the-knot-nft.herokuapp.com",
     "image": "https://the-knot-nft.herokuapp.com/nft/img/test.jpg",
-    "name": "Dave Starbelly",
+    "name": "Grogu the baby Yoda",
     "attributes": [
         {
             "trait_type": "The Child",
             "value": "Grogu"
+        },
+        {
+            "trait_type": "Is Knotted",
+            "value": false
         }
     ]
 }
