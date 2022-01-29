@@ -51,7 +51,7 @@ export default function HomeHero() {
               </Typography>
 
               <Typography sx={{ color: 'text.secondary' }}>
-                The ZONE is built on top of MUI, a powerful library that provides flexible,
+                The Test Zone is built on top of MUI, a powerful library that provides flexible,
                 customizable, and easy-to-use components.
               </Typography>
 
@@ -98,7 +98,7 @@ export default function HomeHero() {
       >
         <Image
           alt="home-hero"
-          src="https://zone-assets-api.vercel.app/assets/images/home/home_hero.png"
+          src="http://localhost:7777/nft/img/robo_wo_background_4.png"
         />
       </Box>
     </RootStyle>
