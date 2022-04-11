@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import menuIcon from '@iconify/icons-carbon/menu';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Container, Stack, Typography, Button } from '@mui/material';
+import { Container, Stack, Typography, Button, ImageListItem, ImageList, ImageListItemBar } from '@mui/material';
 // config
 import { HEADER_MOBILE_HEIGHT, HEADER_DESKTOP_HEIGHT } from '../src/config';
 // _data
@@ -35,6 +35,7 @@ export default function TestPage() {
     const [topic, setTopic] = useState('Payment');
     const [mobileOpen, setMobileOpen] = useState(false);
     const [currentAccount, setCurrentAccount] = useState(null);
+    const [nfts, setNfts] = useState([]);
 
 
     const checkWalletIsConnected = async () => {
@@ -83,20 +84,66 @@ export default function TestPage() {
                 return;
             }
 
+            setNfts([])
+
             const provider = new ethers.providers.Web3Provider(ethereum);
             const signer = provider.getSigner();
             const nftContract = new ethers.Contract(contractAddress, abi, signer)
 
-            console.log("Loading NFT");
-            let nftTxn = await nftContract.tokenURI(1);
+            for (let index = 1; index <= 1; index++) {
 
-            console.log(nftTxn);
+                let owner = await nftContract.ownerOf(index);
+
+                if (owner.toLowerCase() == currentAccount.toLowerCase()) {
+                    console.log("Loading NFT");
+                    let tokenURI = await nftContract.tokenURI(index);
+
+                    const response = await fetch(tokenURI);
+                    const metadata = await response.json()
+
+                    console.log("here is the nfts in lower func", nfts)
+                    setNfts(nfts => [...nfts, metadata]);
+
+
+                    console.log("all nfts: ", nfts)
+
+                    console.log(metadata);
+                }
+
+
+            }
+
+
 
         } catch (err) {
             console.log(err)
         }
 
     }
+
+    // const mintNftHandler = async () => {
+    //     try {
+    //         const { ethereum } = window;
+
+    //         if (!ethereum) {
+    //             console.log("Ethereum object does not exist");
+    //             return;
+    //         }
+
+    //         const provider = new ethers.providers.Web3Provider(ethereum);
+    //         const signer = provider.getSigner();
+    //         const nftContract = new ethers.Contract(contractAddress, abi, signer)
+
+    //         console.log("Loading NFT");
+    //         let nftTxn = await nftContract.tokenURI(1);
+
+    //         console.log(nftTxn);
+
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+
+    // }
 
     const connectWalletButton = () => {
         return (
@@ -111,6 +158,59 @@ export default function TestPage() {
             <Button onClick={getNftHandler} >
                 Load NFT
             </Button>
+        )
+    }
+
+    const mintNftButton = () => {
+        return (
+            <Button onClick={getNftHandler} >
+                Mint NFT
+            </Button>
+        )
+    }
+
+    const showContent = () => {
+        if (currentAccount) {
+            return (
+                <div>
+                    {getNftButton()}
+                    {/* {mintNftButton()} */}
+                </div>
+
+            )
+        } else {
+            return connectWalletButton()
+        }
+    }
+
+    const nftList = () => {
+
+        if (nfts.length >= 0) {
+            return (
+                <ImageList sx={{ width: 500, height: 450 }} variant="woven" cols={3} gap={8}>
+                    {nfts.map(nft => {
+                        return (
+                            <ImageListItem key={nft.name}>
+                                <img
+                                    src={nft.image}
+                                    alt={nft.name}
+                                    loading="lazy"
+                                />
+                                <ImageListItemBar
+                                    title={nft.name}
+                                    subtitle={<span>by: {nft.description}</span>}
+                                    position="below"
+                                />
+                            </ImageListItem>
+                        );
+                    })}
+                </ImageList>
+            );
+        }
+
+
+        return (
+            <p>No NFTs loaded yet</p>
         )
     }
 
@@ -142,8 +242,9 @@ export default function TestPage() {
 
 
                     <div>
-                        {currentAccount ? getNftButton() : connectWalletButton()}
+                        {showContent()}
 
+                        {nftList()}
                     </div>
 
 
